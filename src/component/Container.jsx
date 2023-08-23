@@ -2,11 +2,14 @@ import React, {useState, useEffect} from 'react'
 import Table from './Table'
 import FormAddTable from './FormAddTable'
 import FormSupTable from './FormSupTable'
+import FormAddTask from './FormAddTask'
+
 import {v4 as uuidv4} from 'uuid'
 
 export default function Container() {
 
     const [tables, setTables] = useState([])
+    const [tasks, setTasks] = useState([])
 
     useEffect(()=>{
         setTables([
@@ -38,15 +41,23 @@ export default function Container() {
         setTables(newTables)
     }
 
+    function addTask(task, idTable){
+        setTasks([...tasks, {id: uuidv4(), content: task, idTable: idTable}])
+    }
+
   return (
     <div className="container">
         <div className="d-flex">
             <FormAddTable addTable={addTable} />
             <FormSupTable tables={tables} deleteTable={deleteTable} />
+            <FormAddTask tables={tables} addTask={addTask} />
         </div>
         <div className="d-flex align-items-start">
             {tables.map((table, index)=>{
-                return <Table key={index} data={table} />
+                console.log(table)
+                console.log(tasks)
+                let tasksTable = [...tasks].filter((t) => t.idTable.toString() === table.id.toString())
+                return <Table key={index} data={table} tasksTable={tasksTable} />
             })}
         </div>
     </div>
