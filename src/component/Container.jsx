@@ -12,6 +12,8 @@ export default function Container() {
     const [tables, setTables] = useState([])
     const [tasks, setTasks] = useState([])
     const [formAddTableVisible, setFormAddTableVisible] = useState(false)
+    const [formDropTableVisible, setFormDropTableVisible] = useState(false)
+    const [formAddTaskVisible, setFormAddTaskVisible] = useState(false)
 
     useEffect(()=>{
         setTables([
@@ -41,6 +43,8 @@ export default function Container() {
     function deleteTable(id){
         let newTables = [...tables].filter((tab) => tab.id.toString() !== id.toString())
         setTables(newTables)
+        let newTasks = [...tasks].filter((t) => t.idTable !== id.toString())
+        setTasks(newTasks)
     }
 
     function addTask(task, idTable){
@@ -56,18 +60,32 @@ export default function Container() {
         setFormAddTableVisible(false)
     }
 
+    function closeFormDropTable(){
+        setFormDropTableVisible(false)
+    }
+
+    function closeFormAddTask(){
+        setFormAddTaskVisible(false)
+    }
+    
   return (
     <div className="container">
         <Link to={"/"} className="btn fs-5 border mt-4 mb-4">{'< Page d\'accueil'}</Link>  
         <div>
-            <button className="btn btn-primary" onClick={()=>{
+            <button className="btn btn-success" onClick={()=>{
                 setFormAddTableVisible(true)
             }}>Ajouter un tableau</button>
+            <button className="btn btn-danger" onClick={()=>{
+                setFormDropTableVisible(true)
+            }}>Supprimer un tableau</button>
+            <button className="btn btn-success" onClick={()=>{
+                setFormAddTaskVisible(true)
+            }}>Ajouter une tâche</button>
         </div>
         <div className="d-flex">
             {formAddTableVisible && <FormAddTable addTable={addTable} closeFormAddTable={closeFormAddTable} />}
-            <FormSupTable tables={tables} deleteTable={deleteTable} />
-            <FormAddTask tables={tables} addTask={addTask} />
+            {formDropTableVisible && <FormSupTable tables={tables} deleteTable={deleteTable} closeFormDropTable={closeFormDropTable} />}
+            {formAddTaskVisible && <FormAddTask tables={tables} addTask={addTask} closeFormAddTask={closeFormAddTask} />}
         </div>
         <div className="d-flex align-items-start">
             {tables.map((table, index)=>{

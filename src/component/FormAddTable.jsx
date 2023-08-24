@@ -5,7 +5,7 @@ export default function FormAddTable({addTable, closeFormAddTable}) {
     const [title, setTitle] = useState('')
 
   return (
-    <div style={{position: 'fixed', left: '20%', width: '50%', height: '50%'}}>
+    <div className="popup-overlay">
         <div className="m-3 border p-3 rounded-3 bg-forms" style={{margin: 'auto', backgroundColor: '#ffffffd6'}}>
             <button className="btn btn-danger" onClick={()=>{
                 closeFormAddTable()
