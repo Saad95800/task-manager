@@ -11,6 +11,7 @@ export default function Container() {
 
     const [tables, setTables] = useState([])
     const [tasks, setTasks] = useState([])
+    const [formAddTableVisible, setFormAddTableVisible] = useState(false)
 
     useEffect(()=>{
         setTables([
@@ -51,11 +52,20 @@ export default function Container() {
         setTasks(newTasks)
     }
 
+    function closeFormAddTable(){
+        setFormAddTableVisible(false)
+    }
+
   return (
     <div className="container">
         <Link to={"/"} className="btn fs-5 border mt-4 mb-4">{'< Page d\'accueil'}</Link>  
+        <div>
+            <button className="btn btn-primary" onClick={()=>{
+                setFormAddTableVisible(true)
+            }}>Ajouter un tableau</button>
+        </div>
         <div className="d-flex">
-            <FormAddTable addTable={addTable} />
+            {formAddTableVisible && <FormAddTable addTable={addTable} closeFormAddTable={closeFormAddTable} />}
             <FormSupTable tables={tables} deleteTable={deleteTable} />
             <FormAddTask tables={tables} addTask={addTask} />
         </div>
