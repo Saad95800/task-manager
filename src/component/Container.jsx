@@ -46,6 +46,11 @@ export default function Container() {
         setTasks([...tasks, {id: uuidv4(), content: task, idTable: idTable}])
     }
 
+    function deleteTask(id_task){
+        let newTasks = [...tasks].filter((t)=> t.id.toString() !== id_task.toString())
+        setTasks(newTasks)
+    }
+
   return (
     <div className="container">
         <Link to={"/"} className="btn fs-5 border mt-4 mb-4">{'< Page d\'accueil'}</Link>  
@@ -57,7 +62,7 @@ export default function Container() {
         <div className="d-flex align-items-start">
             {tables.map((table, index)=>{
                 let tasksTable = [...tasks].filter((t) => t.idTable.toString() === table.id.toString())
-                return <Table key={index} data={table} tasksTable={tasksTable} />
+                return <Table key={index} data={table} tasksTable={tasksTable} deleteTask={deleteTask}/>
             })}
         </div>
     </div>
