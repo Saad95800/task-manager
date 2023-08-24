@@ -3,6 +3,7 @@ import Table from './Table'
 import FormAddTable from './FormAddTable'
 import FormSupTable from './FormSupTable'
 import FormAddTask from './FormAddTask'
+import {Link} from 'react-router-dom'
 
 import {v4 as uuidv4} from 'uuid'
 
@@ -47,6 +48,7 @@ export default function Container() {
 
   return (
     <div className="container">
+        <Link to={"/"} className="btn btn-primary">Page d'accueil</Link>  
         <div className="d-flex">
             <FormAddTable addTable={addTable} />
             <FormSupTable tables={tables} deleteTable={deleteTable} />
