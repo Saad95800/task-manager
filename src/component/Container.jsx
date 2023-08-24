@@ -20,7 +20,7 @@ export default function Container() {
             },
             {
                 id: '2',
-                title: 'Sujet de la prochaine rÃ©union'
+                title: 'Sujet de la prochaine réunion'
             },
             {
                 id: '3',
@@ -48,7 +48,7 @@ export default function Container() {
 
   return (
     <div className="container">
-        <Link to={"/"} className="btn btn-primary">Page d'accueil</Link>  
+        <Link to={"/"} className="btn fs-5 border mt-4 mb-4">{'< Page d\'accueil'}</Link>  
         <div className="d-flex">
             <FormAddTable addTable={addTable} />
             <FormSupTable tables={tables} deleteTable={deleteTable} />
@@ -56,8 +56,6 @@ export default function Container() {
         </div>
         <div className="d-flex align-items-start">
             {tables.map((table, index)=>{
-                console.log(table)
-                console.log(tasks)
                 let tasksTable = [...tasks].filter((t) => t.idTable.toString() === table.id.toString())
                 return <Table key={index} data={table} tasksTable={tasksTable} />
             })}

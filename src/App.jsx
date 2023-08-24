@@ -9,13 +9,13 @@ import {Routes, Route} from 'react-router-dom'
 function App() {
 
   return (
-    <>
+    <div className="gradient-background container-app">
         <Routes>
           <Route path={'/'} element={<HomePage />} />
           <Route path={'/tasklist'} element={<Container />} />
           <Route path={'/login'} element={<Login />} />
         </Routes>
-    </>
+    </div>
 
   )
 }
