@@ -67,7 +67,14 @@ export default function Container() {
     function closeFormAddTask(){
         setFormAddTaskVisible(false)
     }
-    
+
+    function moveTask(id_task, id_table_drop){
+        let newTasks = [...tasks]
+        let index = newTasks.findIndex(t => t.id === id_task)
+        newTasks[index].idTable = id_table_drop
+        setTasks(newTasks)
+    }
+
   return (
     <div className="container">
         <Link to={"/"} className="btn fs-5 border mt-4 mb-4">{'< Page d\'accueil'}</Link>  
@@ -90,7 +97,7 @@ export default function Container() {
         <div className="d-flex align-items-start">
             {tables.map((table, index)=>{
                 let tasksTable = [...tasks].filter((t) => t.idTable.toString() === table.id.toString())
-                return <Table key={index} data={table} tasksTable={tasksTable} deleteTask={deleteTask}/>
+                return <Table key={index} data={table} tasksTable={tasksTable} deleteTask={deleteTask} moveTask={moveTask} />
             })}
         </div>
     </div>
