@@ -1,7 +1,7 @@
 import React from 'react'
 import Task from './Task'
 
-export default function Table({data, tasksTable, deleteTask, moveTask, displayFormUpdateTask}) {
+export default function Table({data, tasksTable, deleteTask, moveTask, displayFormUpdateTask, displayFormTable}) {
   return (
     <div className="table p-2 m-3 rounded"
     onDrop={(e)=>{
@@ -14,7 +14,11 @@ export default function Table({data, tasksTable, deleteTask, moveTask, displayFo
       e.preventDefault()
     }}
     >
-        <p>{data.title}</p>
+        <p
+          onClick={()=>{
+            displayFormTable(data.id, data.title)
+          }}
+        >{data.title}</p>
         {tasksTable.map((task, index)=>{
             return <Task key={index} task={task} deleteTask={deleteTask} displayFormUpdateTask={displayFormUpdateTask}/>
         })}

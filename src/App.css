@@ -43,3 +43,7 @@
   text-align: center;
   position: relative;
 }
+
+.no-select {
+  user-select: none;
+}

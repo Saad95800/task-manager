@@ -4,6 +4,7 @@ import FormAddTable from './FormAddTable'
 import FormSupTable from './FormSupTable'
 import FormAddTask from './FormAddTask'
 import FormEditTask from './FormEditTask'
+import FormEditTable from './FormEditTable'
 
 import {Link} from 'react-router-dom'
 
@@ -17,7 +18,9 @@ export default function Container() {
     const [formDropTableVisible, setFormDropTableVisible] = useState(false)
     const [formAddTaskVisible, setFormAddTaskVisible] = useState(false)
     const [formEditTaskVisible, setFormEditTaskVisible] = useState(false)
+    const [formEditTableVisible, setFormEditTableVisible] = useState(false)
     const [taskToEdit, setTaskToEdit] = useState(null)
+    const [tableToEdit, setTableToEdit] = useState(null)
 
     useEffect(()=>{
         setTables([
@@ -103,6 +106,27 @@ export default function Container() {
         setFormEditTaskVisible(false)
     }
 
+    function displayFormTable(id_table, title_table){
+        setTableToEdit({
+          id: id_table,
+          title: title_table  
+        })
+        setFormEditTableVisible(true)
+    }
+
+    function closeFromEditTable(){
+        setFormEditTableVisible(false)
+    }
+
+    function updateTable(id_table, title_table) {
+
+        let newTables = [...tables]
+        let index = newTables.findIndex(t => t.id === id_table)
+        newTables[index].title = title_table
+        setTables(newTables)
+        setFormEditTableVisible(false)
+    }
+
   return (
     <div className="container">
         <Link to={"/"} className="btn fs-5 border mt-4 mb-4">{'< Page d\'accueil'}</Link>  
@@ -122,11 +146,20 @@ export default function Container() {
             {formDropTableVisible && <FormSupTable tables={tables} deleteTable={deleteTable} closeFormDropTable={closeFormDropTable} />}
             {formAddTaskVisible && <FormAddTask tables={tables} addTask={addTask} closeFormAddTask={closeFormAddTask} />}
             {formEditTaskVisible && <FormEditTask task={taskToEdit} closeFormEditTask={closeFormEditTask} updateTask={updateTask}/>}
+            {formEditTableVisible && <FormEditTable table={tableToEdit} closeFromEditTable={closeFromEditTable} updateTable={updateTable} />}
         </div>
         <div className="d-flex align-items-start">
             {tables.map((table, index)=>{
                 let tasksTable = [...tasks].filter((t) => t.idTable.toString() === table.id.toString())
-                return <Table key={index} data={table} tasksTable={tasksTable} deleteTask={deleteTask} moveTask={moveTask} displayFormUpdateTask={displayFormUpdateTask} />
+                return <Table 
+                            key={index} 
+                            data={table} 
+                            tasksTable={tasksTable} 
+                            deleteTask={deleteTask} 
+                            moveTask={moveTask} 
+                            displayFormUpdateTask={displayFormUpdateTask} 
+                            displayFormTable={displayFormTable}
+                        />
             })}
         </div>
     </div>
