@@ -66,8 +66,10 @@ export default function Container() {
     }
 
     function deleteTask(id_task){
-        let newTasks = [...tasks].filter((t)=> t.id.toString() !== id_task.toString())
-        setTasks(newTasks)
+        setTasks(produce(tasks, (tasksDraft)=>{
+            let index = tasksDraft.findIndex(t => t.id.toString() === id_task.toString())
+            tasksDraft.splice(index, 1)
+        }))
     }
 
     function closeFormAddTable(){
