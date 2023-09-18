@@ -5,10 +5,9 @@ import FormSupTable from './FormSupTable'
 import FormAddTask from './FormAddTask'
 import FormEditTask from './FormEditTask'
 import FormEditTable from './FormEditTable'
-
 import {Link} from 'react-router-dom'
-
 import {v4 as uuidv4} from 'uuid'
+import {produce} from 'immer'
 
 export default function Container() {
 
@@ -59,7 +58,11 @@ export default function Container() {
     }
 
     function addTask(task, idTable){
-        setTasks([...tasks, {id: uuidv4(), content: task, idTable: idTable}])
+        setTasks(
+            produce(tasks, (tasksDraft)=>{
+                tasksDraft.push({id: uuidv4(), content: task, idTable: idTable})
+            })
+        )
     }
 
     function deleteTask(id_task){
