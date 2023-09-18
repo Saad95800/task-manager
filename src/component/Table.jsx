@@ -12,6 +12,7 @@ export default function Table({data, tasksTable, deleteTask, moveTask, displayFo
     }}
     onDrop={(e)=>{
       e.preventDefault()
+      e.stopPropagation()
       let id_table_drop = data.id
       if(e.dataTransfer.getData('id_task') !== undefined && e.dataTransfer.getData('id_task') !== null && e.dataTransfer.getData('id_task') !== ''){
         console.log('move task')

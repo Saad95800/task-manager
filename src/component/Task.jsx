@@ -4,6 +4,7 @@ export default function Task({task, deleteTask, displayFormUpdateTask}) {
   return (
     <div className="mb-1 p-2 rounded bg-white d-flex justify-content-between" style={{cursor: 'pointer'}}
     onDragStart={(e)=>{
+      e.stopPropagation()
       e.dataTransfer.setData('id_task', task.id)
     }}
     onClick={()=>{
