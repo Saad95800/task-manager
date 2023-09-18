@@ -106,10 +106,12 @@ export default function Container() {
 
     function updateTask(id_task, content){
 
-        let newTasks = [...tasks]
-        let index = newTasks.findIndex(t => t.id === id_task)
-        newTasks[index].content = content
-        setTasks(newTasks)
+        setTasks(
+            produce(tasks, (tasksDraft)=>{
+                let index = tasksDraft.findIndex(t => t.id === id_task)
+                tasksDraft[index].content = content
+            })
+        )
         setFormEditTaskVisible(false)
     }
 
