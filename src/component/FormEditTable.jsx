@@ -10,6 +10,10 @@ export default function FormEditTable({table, closeFromEditTable, updateTable}) 
     }}>
         <form className="forms d-flex flex-column bg-white p-3 rounded-3" onSubmit={(e)=>{
             e.preventDefault()
+            if(titleTable.length === 0){
+                // displayMessage("Veuillez saisir un Texte pour le tableau", "error")
+                return
+            }
             updateTable(table.id, titleTable)
         }}
         onClick={(e)=>{

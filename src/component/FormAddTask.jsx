@@ -14,6 +14,12 @@ export default function FormAddTask({tables, addTask, closeFormAddTask}) {
             <form onSubmit={(e)=>{
                 e.preventDefault()
                 if(idTable !== 0){
+
+                    if(task.length === 0){
+                        // displayMessage("Veuillez saisir un Texte pour la tâche", "error")
+                        return
+                    }
+
                     addTask(task, idTable)
                     setTask('')
                     setIdTable(0)                

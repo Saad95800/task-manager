@@ -11,6 +11,10 @@ export default function FormEditTask({task, closeFormEditTask, updateTask}) {
         <form className="forms d-flex flex-column p-3 rounded-3" style={{backgroundColor: '#ffffffd6'}}
             onSubmit={(e)=>{
                 e.preventDefault()
+                if(contentTask.length === 0){
+                    // displayMessage("Veuillez saisir un Texte pour la tâche", "error")
+                    return
+                }
                 updateTask(task.id, contentTask)
             }}
             onClick={(e)=>{

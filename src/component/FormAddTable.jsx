@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-export default function FormAddTable({addTable, closeFormAddTable}) {
+export default function FormAddTable({addTable, closeFormAddTable, displayMessage}) {
 
     const [title, setTitle] = useState('')
 
@@ -16,7 +16,7 @@ export default function FormAddTable({addTable, closeFormAddTable}) {
                     addTable(title)
                     closeFormAddTable()
                 }else{
-                    alert('Veuillez saisir un titre au tableau')
+                    // displayMessage("Veuillez saisir un titre au tableau !", "error")
                 }
             }}>
                 <div className="form-group">

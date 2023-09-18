@@ -8,6 +8,8 @@ import FormEditTable from './FormEditTable'
 import {Link} from 'react-router-dom'
 import {v4 as uuidv4} from 'uuid'
 import {produce} from 'immer'
+import {displayMessage} from '../redux/message/MessageSlice'
+import {store} from '../redux/store'
 
 export default function Container() {
 
@@ -48,6 +50,7 @@ export default function Container() {
 
     function addTable(title){
         setTables([...tables, {id: uuidv4(), title: title, order: tables.length + 1}])
+        store.dispatch(displayMessage({texte: "Tableau ajouté avec succès !", typeMessage: "success"}))
     }
 
     function deleteTable(id){
@@ -55,6 +58,7 @@ export default function Container() {
         setTables(newTables)
         let newTasks = [...tasks].filter((t) => t.idTable !== id.toString())
         setTasks(newTasks)
+        // displayMessage("Tableau supprimé avec succès !", "success")
     }
 
     function addTask(task, idTable){
@@ -63,6 +67,7 @@ export default function Container() {
                 tasksDraft.push({id: uuidv4(), content: task, idTable: idTable})
             })
         )
+        // displayMessage("Tâche ajoutée avec succès !", "success")
     }
 
     function deleteTask(id_task){
@@ -70,6 +75,7 @@ export default function Container() {
             let index = tasksDraft.findIndex(t => t.id.toString() === id_task.toString())
             tasksDraft.splice(index, 1)
         }))
+        // displayMessage("Tâche supprimée avec succès !", "success")
     }
 
     function closeFormAddTable(){
@@ -115,6 +121,7 @@ export default function Container() {
             })
         )
         setFormEditTaskVisible(false)
+        // displayMessage("Tâche modifié avec succès !", "success")
     }
 
     function displayFormTable(id_table, title_table){
@@ -136,6 +143,7 @@ export default function Container() {
         newTables[index].title = title_table
         setTables(newTables)
         setFormEditTableVisible(false)
+        //displayMessage("Tableau modifié avec succès !", "success")
     }
 
     function moveTable(id_table_drag, order_table_drag, id_table_drop, order_table_drop){
