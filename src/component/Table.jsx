@@ -1,11 +1,16 @@
 import React from 'react'
 import Task from './Task'
 import { displayFormTable, moveTable } from '../redux/table/TableSlice'
-import { store } from '../redux/store'
+import { useDispatch } from 'react-redux'
+import { moveTask } from '../redux/task/TaskSlice'
 
-export default function Table({data, tasksTable, deleteTask, moveTask, displayFormUpdateTask}) {
+export default function Table({data, tasksTable}) {
+
+  const dispatch = useDispatch()
+
   return (
     <div className="table p-2 m-3 rounded"
+    style={{minWidth: '250px'}}
     draggable="true"
     onDragStart={(e)=>{
       e.stopPropagation()
@@ -18,14 +23,13 @@ export default function Table({data, tasksTable, deleteTask, moveTask, displayFo
       let id_table_drop = data.id
       if(e.dataTransfer.getData('id_task') !== undefined && e.dataTransfer.getData('id_task') !== null && e.dataTransfer.getData('id_task') !== ''){
         let id_task = e.dataTransfer.getData('id_task')
-        
-        moveTask(id_task, id_table_drop)        
+        dispatch(moveTask({id_task, id_table_drop}))
       }
 
       if(e.dataTransfer.getData('id_table_drag') !== undefined && e.dataTransfer.getData('id_table_drag') !== null && e.dataTransfer.getData('id_table_drag') !== ''){
        let id_table_drag = e.dataTransfer.getData('id_table_drag')
         let order_table_drag = e.dataTransfer.getData('order_table_drag')
-        store.dispatch(moveTable({id_table_drag: id_table_drag, order_table_drag: order_table_drag, id_table_drop: id_table_drop, order_table_drop: data.order}))
+        dispatch(moveTable({id_table_drag: id_table_drag, order_table_drag: order_table_drag, id_table_drop: id_table_drop, order_table_drop: data.order}))
       }
     }}
     onDragOver={(e)=>{
@@ -34,11 +38,11 @@ export default function Table({data, tasksTable, deleteTask, moveTask, displayFo
     >
         <p
           onClick={()=>{
-            store.dispatch(displayFormTable({id_table: data.id, title_table: data.title}))
+            dispatch(displayFormTable({id_table: data.id, title_table: data.title}))
           }}
         >{data.title}</p>
         {tasksTable.map((task, index)=>{
-            return <Task key={index} task={task} deleteTask={deleteTask} displayFormUpdateTask={displayFormUpdateTask}/>
+            return <Task key={index} task={task}/>
         })}
     </div>
   )

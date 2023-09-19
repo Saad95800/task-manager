@@ -1,14 +1,16 @@
 import React, {useState} from 'react'
 import { closeFromEditTable, updateTable } from '../redux/table/TableSlice'
 import { store } from '../redux/store'
+import { useDispatch } from 'react-redux'
 
 export default function FormEditTable({table}) {
 
+    const dispatch = useDispatch()
     const [titleTable, setTitleTable] = useState(table.title)
 
   return (
     <div className="popup-overlay" onClick={()=>{
-        store.dispatch(closeFromEditTable())
+        dispatch(closeFromEditTable())
     }}>
         <form className="forms d-flex flex-column bg-white p-3 rounded-3" onSubmit={(e)=>{
             e.preventDefault()
@@ -16,7 +18,7 @@ export default function FormEditTable({table}) {
                 // displayMessage("Veuillez saisir un Texte pour le tableau", "error")
                 return
             }
-            store.dispatch(updateTable({id_table: table.id, title_table: titleTable}))
+            dispatch(updateTable({id_table: table.id, title_table: titleTable}))
         }}
         onClick={(e)=>{
             e.stopPropagation()

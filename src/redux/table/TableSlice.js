@@ -52,7 +52,6 @@ export const TableSlice = createSlice({
         },
         moveTable: (state, action) => {
 
-            // id_table_drag, order_table_drag, id_table_drop, order_table_drop
             let newTables = [...state.tables]
     
             for(let table of newTables){
@@ -70,7 +69,7 @@ export const TableSlice = createSlice({
                         table.order = table.order - 1
                     }      
                     // Si l'order du tableau de drop est inférieur à l'order du tableau de drag          
-                }else if(Number(order_table_drop < Number(order_table_drag))){
+                }else if(Number(action.payload.order_table_drop < Number(action.payload.order_table_drag))){
                     // le tableau qui a l'id id_table_drag prend le order order_table_drop
                     // Les tableaux d'order suppérieur à order_table_drop et inférieur à order_table_drag on leur order qui fait -1
                     if(table.id.toString() === action.payload.id_table_drag.toString()){

@@ -1,7 +1,10 @@
 import React, {useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { addTask, closeFormAddTask } from '../redux/task/TaskSlice'
 
-export default function FormAddTask({tables, addTask, closeFormAddTask}) {
+export default function FormAddTask({tables}) {
 
+    const dispatch = useDispatch()
     const [idTable, setIdTable] = useState(0)
     const [task, setTask] = useState('')
 
@@ -9,7 +12,7 @@ export default function FormAddTask({tables, addTask, closeFormAddTask}) {
     <div className="popup-overlay">
         <div className="m-3 border p-3 rounded-3" style={{backgroundColor: '#ffffffd6'}}>
             <button className="btn btn-danger" onClick={()=>{
-                closeFormAddTask()
+                dispatch(closeFormAddTask())
             }}>Fermer</button>
             <form onSubmit={(e)=>{
                 e.preventDefault()
@@ -20,7 +23,7 @@ export default function FormAddTask({tables, addTask, closeFormAddTask}) {
                         return
                     }
 
-                    addTask(task, idTable)
+                    dispatch(addTask({task: task, idTable: idTable}))
                     setTask('')
                     setIdTable(0)                
                 }
