@@ -1,6 +1,9 @@
 import React, {useState} from 'react'
+import { displayMessage } from '../redux/message/MessageSlice'
+import { store } from '../redux/store'
+import { closeFormAddTable, addTable } from '../redux/table/TableSlice'
 
-export default function FormAddTable({addTable, closeFormAddTable, displayMessage}) {
+export default function FormAddTable() {
 
     const [title, setTitle] = useState('')
 
@@ -8,13 +11,14 @@ export default function FormAddTable({addTable, closeFormAddTable, displayMessag
     <div className="popup-overlay">
         <div className="m-3 border p-3 rounded-3 bg-forms" style={{margin: 'auto', backgroundColor: '#ffffffd6'}}>
             <button className="btn btn-danger" onClick={()=>{
-                closeFormAddTable()
+                store.dispatch(closeFormAddTable())
             }}>Fermer</button>
             <form onSubmit={(e)=>{
                 e.preventDefault()
                 if(title.length > 0){
-                    addTable(title)
-                    closeFormAddTable()
+                    store.dispatch(addTable({title: title}))
+                    store.dispatch(displayMessage({texte: "Tableau ajouté avec succès !", typeMessage: "success"}))
+                    store.dispatch(closeFormAddTable())
                 }else{
                     // displayMessage("Veuillez saisir un titre au tableau !", "error")
                 }

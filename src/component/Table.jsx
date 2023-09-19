@@ -1,7 +1,9 @@
 import React from 'react'
 import Task from './Task'
+import { displayFormTable, moveTable } from '../redux/table/TableSlice'
+import { store } from '../redux/store'
 
-export default function Table({data, tasksTable, deleteTask, moveTask, displayFormUpdateTask, displayFormTable, moveTable}) {
+export default function Table({data, tasksTable, deleteTask, moveTask, displayFormUpdateTask}) {
   return (
     <div className="table p-2 m-3 rounded"
     draggable="true"
@@ -15,17 +17,15 @@ export default function Table({data, tasksTable, deleteTask, moveTask, displayFo
       e.stopPropagation()
       let id_table_drop = data.id
       if(e.dataTransfer.getData('id_task') !== undefined && e.dataTransfer.getData('id_task') !== null && e.dataTransfer.getData('id_task') !== ''){
-        console.log('move task')
         let id_task = e.dataTransfer.getData('id_task')
         
         moveTask(id_task, id_table_drop)        
       }
 
       if(e.dataTransfer.getData('id_table_drag') !== undefined && e.dataTransfer.getData('id_table_drag') !== null && e.dataTransfer.getData('id_table_drag') !== ''){
-        console.log('move array')
        let id_table_drag = e.dataTransfer.getData('id_table_drag')
         let order_table_drag = e.dataTransfer.getData('order_table_drag')
-        moveTable(id_table_drag, order_table_drag, id_table_drop, data.order)
+        store.dispatch(moveTable({id_table_drag: id_table_drag, order_table_drag: order_table_drag, id_table_drop: id_table_drop, order_table_drop: data.order}))
       }
     }}
     onDragOver={(e)=>{
@@ -34,7 +34,7 @@ export default function Table({data, tasksTable, deleteTask, moveTask, displayFo
     >
         <p
           onClick={()=>{
-            displayFormTable(data.id, data.title)
+            store.dispatch(displayFormTable({id_table: data.id, title_table: data.title}))
           }}
         >{data.title}</p>
         {tasksTable.map((task, index)=>{

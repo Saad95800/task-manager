@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
+import { closeFormDropTable, deleteTable } from '../redux/table/TableSlice'
+import { store } from '../redux/store'
 
-export default function FormSupTable({tables, deleteTable, closeFormDropTable}) {
+export default function FormSupTable({tables}) {
 
     const [idTable, setIdTable] = useState(0)
 
@@ -8,12 +10,12 @@ export default function FormSupTable({tables, deleteTable, closeFormDropTable}) 
     <div className="popup-overlay">
         <div className="m-3 border p-3 rounded-3" style={{backgroundColor: '#ffffffd6'}}>
             <button className="btn btn-danger" onClick={()=>{
-                closeFormDropTable()
+                store.dispatch(closeFormDropTable())
             }}>Fermer</button>
             <form onSubmit={(e)=>{
                 e.preventDefault()
                 if(idTable !== 0){
-                    deleteTable(idTable)
+                    store.dispatch(deleteTable({idTable}))
                     setIdTable(0)            
                 }
             }}>

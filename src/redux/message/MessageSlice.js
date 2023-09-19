@@ -11,7 +11,6 @@ export const MessageSlice = createSlice({
     initialState: initalState,
     reducers: {
         displayMessage: (state, action) => {
-            console.log(action.payload)
             state.viewMessage = true
             state.texte = action.payload.texte
             state.typeMessage = action.payload.typeMessage
