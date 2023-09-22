@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 export default function SpaceItem({space}) {
+    
   return (
     <Box sx={{ minWidth: 275 }}>
         <Card variant="outlined">

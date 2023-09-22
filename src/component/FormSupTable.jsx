@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { styleModal } from '../utils/styles'
 import { closeFormAddTask } from '../redux/task/TaskSlice';
+import { displayMessage } from '../redux/message/MessageSlice';
 
 export default function FormSupTable({tables}) {
 
@@ -27,6 +28,7 @@ export default function FormSupTable({tables}) {
                     dispatch(deleteTable({idTable}))
                     setIdTable(0)            
                 }
+                dispatch(displayMessage({texte: "Tableau supprimé avec succès", typeMessage: "success"}))
             }}>
                 <Typography>Supprimer un tableau</Typography>
                 <div className="form-group">
