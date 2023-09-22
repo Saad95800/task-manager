@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {Routes, Route} from 'react-router-dom'
 import Message from './component/Message'
 import { useSelector } from 'react-redux'
+import SpaceList from './component/SpaceList'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path={'/'} element={<HomePage />} />
           <Route path={'/tasklist'} element={<Container />} />
           <Route path={'/login'} element={<Login />} />
+          <Route path={'/spaces'} element={<SpaceList />} />
         </Routes>
     </div>
 

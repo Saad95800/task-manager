@@ -7,6 +7,7 @@ export default function HomePage() {
         <h1>HomePage</h1>   
         <Link to={"/login"} className="btn btn-danger" >Déconnexion</Link>     
         <Link to={"/tasklist"} className="btn btn-primary">Listes de tâches</Link>     
+        <Link to={"/spaces"} className="btn btn-primary">Listes de espaces</Link>     
     </>
 
   )

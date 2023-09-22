@@ -50,58 +50,6 @@ export default function Container() {
         ]))
     }, [])
 
-    // function addTask(task, idTable){
-    //     setTasks(
-    //         produce(tasks, (tasksDraft)=>{
-    //             tasksDraft.push({id: uuidv4(), content: task, idTable: idTable})
-    //         })
-    //     )
-    // }
-
-    // function deleteTask(id_task){
-    //     setTasks(produce(tasks, (tasksDraft)=>{
-    //         let index = tasksDraft.findIndex(t => t.id.toString() === id_task.toString())
-    //         tasksDraft.splice(index, 1)
-    //     }))
-    // }
-
-    // function closeFormAddTask(){
-    //     setFormAddTaskVisible(false)
-    // }
-
-    // function moveTask(id_task, id_table_drop){
-    //     let newTasks = [...tasks]
-    //     let index = newTasks.findIndex(t => t.id === id_task)
-    //     newTasks[index].idTable = id_table_drop
-    //     setTasks(newTasks)
-    // }
-
-    // function displayFormUpdateTask(id_task){
-    //     setFormEditTaskVisible(true)
-    //     setTaskToEdit(getTaskById(id_task))
-    // }
-
-    // function closeFormEditTask(){
-    //     setFormEditTaskVisible(false)
-    // }
-
-    // function getTaskById(id_task){
-    //     let newTasks = [...tasks]
-    //     let index = newTasks.findIndex(t => t.id === id_task)
-    //     return newTasks[index]
-    // }
-
-    // function updateTask(id_task, content){
-
-    //     setTasks(
-    //         produce(tasks, (tasksDraft)=>{
-    //             let index = tasksDraft.findIndex(t => t.id === id_task)
-    //             tasksDraft[index].content = content
-    //         })
-    //     )
-    //     setFormEditTaskVisible(false)
-    // }
-
     let tableSorted = [...tables].sort((a, b)=> a.order > b.order ? 1 : -1  )
   return (
     <div className="container">
