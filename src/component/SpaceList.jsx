@@ -20,9 +20,6 @@ export default function SpaceList() {
                 })}                
             </Grid>
         </Box>
-
-        
-
     </div>
   )
 }

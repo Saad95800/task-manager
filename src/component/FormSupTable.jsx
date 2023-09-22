@@ -2,6 +2,11 @@ import React, {useEffect, useState} from 'react'
 import { closeFormDropTable, deleteTable } from '../redux/table/TableSlice'
 import { store } from '../redux/store'
 import { useDispatch } from 'react-redux'
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import { styleModal } from '../utils/styles'
+import { closeFormAddTask } from '../redux/task/TaskSlice';
 
 export default function FormSupTable({tables}) {
 
@@ -9,11 +14,13 @@ export default function FormSupTable({tables}) {
     const [idTable, setIdTable] = useState(0)
 
   return (
-    <div className="popup-overlay">
-        <div className="m-3 border p-3 rounded-3" style={{backgroundColor: '#ffffffd6'}}>
-            <button className="btn btn-danger" onClick={()=>{
-                dispatch(closeFormDropTable())
-            }}>Fermer</button>
+    <Modal
+        open={true}
+        onClose={()=>{ dispatch(closeFormDropTable()) }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+    >
+        <Box className="m-3 border p-3 rounded-3 bg-forms" style={{...styleModal, backgroundColor: '#ffffffd6'}}>
             <form onSubmit={(e)=>{
                 e.preventDefault()
                 if(idTable !== 0){
@@ -21,8 +28,8 @@ export default function FormSupTable({tables}) {
                     setIdTable(0)            
                 }
             }}>
+                <Typography>Supprimer un tableau</Typography>
                 <div className="form-group">
-                    <label>Supprimer un tableau</label>
                     <select value={idTable} className="form-control" onChange={(e)=>{
                         setIdTable(e.target.value)
                     }}>
@@ -36,7 +43,7 @@ export default function FormSupTable({tables}) {
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
+        </Box>
+    </Modal>
   )
 }
