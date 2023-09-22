@@ -8,7 +8,23 @@ const initalState = {
         },
         {
             id: 2,
-            title: 'Espace jod freelance'
+            title: 'Espace job freelance'
+        },
+        {
+            id: 3,
+            title: 'Projets perso'
+        },
+        {
+            id: 4,
+            title: 'Projets pro'
+        },
+        {
+            id: 5,
+            title: 'Tâches quotidiennes'
+        },
+        {
+            id: 6,
+            title: 'Tâches administratives'
         }
     ]
 }
