@@ -33,10 +33,14 @@ export const SpaceSlice = createSlice({
     name: 'space',
     initialState: initalState,
     reducers: {
+        setSpaces: (state, action) => {
+            state.spaces = action.payload
+        }
     }
 })
 
-// export const {
-// } = SpaceSlice.actions
+export const {
+    setSpaces
+} = SpaceSlice.actions
 
 export default SpaceSlice.reducer

@@ -20,7 +20,7 @@ function App() {
         {viewMessage && <Message texte={texte} typeMessage={typeMessage} />}
         <Routes>
           <Route path={'/'} element={<HomePage />} />
-          <Route path={'/tasklist'} element={<Container />} />
+          <Route path={'/tasklist/:spaceId'} element={<Container />} />
           <Route path={'/login'} element={<Login />} />
           <Route path={'/spaces'} element={<SpaceList />} />
         </Routes>

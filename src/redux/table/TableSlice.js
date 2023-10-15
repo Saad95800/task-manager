@@ -2,7 +2,32 @@ import { createSlice } from '@reduxjs/toolkit'
 import {v4 as uuidv4} from 'uuid'
 
 const initalState = {
-    tables: [],
+    tables:  [
+        {
+            id: '1',
+            title: 'Projet ressource',
+            order: 4,
+            spaceId: 1
+        },
+        {
+            id: '2',
+            title: 'Sujet de la prochaine réunion',
+            order: 3,
+            spaceId: 1
+        },
+        {
+            id: '3',
+            title: 'A faire',
+            order: 2,
+            spaceId: 1
+        },
+        {
+            id: '4',
+            title: 'En cours',
+            order: 1,
+            spaceId: 1
+        }
+    ],
     formAddTableVisible: false,
     formDropTableVisible: false,
     formEditTableVisible: false,
@@ -14,7 +39,7 @@ export const TableSlice = createSlice({
     initialState: initalState,
     reducers: {
         addTable: (state, action) => {
-            state.tables = [...state.tables, {id: uuidv4(), title: action.payload.title, order: state.tables.length + 1}]
+            state.tables = [...state.tables, {id: uuidv4(), title: action.payload.title, order: state.tables.length + 1, spaceId: action.payload.spaceId}]
         },
         deleteTable: (state, action) => {
             let newTables = state.tables.filter((tab) => tab.id.toString() !== action.payload.idTable.toString())

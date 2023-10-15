@@ -5,7 +5,7 @@ import FormSupTable from './FormSupTable'
 import FormAddTask from './FormAddTask'
 import FormEditTask from './FormEditTask'
 import FormEditTable from './FormEditTable'
-import {Link} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 import {produce} from 'immer'
 import {store} from '../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
@@ -25,32 +25,14 @@ export default function Container() {
     const taskToEdit = useSelector((state) => state.task.taskToEdit)
     const tableToEdit = useSelector((state) => state.table.tableToEdit)
 
+    const { spaceId } = useParams()
+
     useEffect(()=>{
-        dispatch(setTables([
-            {
-                id: '1',
-                title: 'Projet ressource',
-                order: 4
-            },
-            {
-                id: '2',
-                title: 'Sujet de la prochaine réunion',
-                order: 3
-            },
-            {
-                id: '3',
-                title: 'A faire',
-                order: 2
-            },
-            {
-                id: '4',
-                title: 'En cours',
-                order: 1
-            }
-        ]))
+        dispatch(setTables(tables))
     }, [])
 
     let tableSorted = [...tables].sort((a, b)=> a.order > b.order ? 1 : -1  )
+    let tableFiltered = tableSorted.filter(t => t.spaceId.toString() === spaceId.toString())
   return (
     <div className="container">
         <Link to={"/"} className="btn fs-5 border mt-4 mb-4">{'< Page d\'accueil'}</Link>  
@@ -73,7 +55,7 @@ export default function Container() {
             {formEditTableVisible && <FormEditTable table={tableToEdit} />}
         </div>
         <div className="d-flex align-items-start" style={{overflowX: 'scroll', minHeight: '500px'}}>
-            {tableSorted.map((table, index)=>{
+            {tableFiltered.map((table, index)=>{
                 let tasksTable = [...tasks].filter((t) => t.idTable.toString() === table.id.toString())
                 return <Table 
                             key={index} 

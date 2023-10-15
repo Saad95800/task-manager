@@ -7,12 +7,13 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { styleModal } from '../utils/styles'
+import { useParams } from 'react-router-dom'
 
 export default function FormAddTable() {
 
     const dispatch = useDispatch()
     const [title, setTitle] = useState('')
-
+    const { spaceId } = useParams()
   return (
     <Modal
         open={true}
@@ -24,7 +25,7 @@ export default function FormAddTable() {
                 <form onSubmit={(e)=>{
                     e.preventDefault()
                     if(title.length > 0){
-                        dispatch(addTable({title: title}))
+                        dispatch(addTable({title: title, spaceId: spaceId}))
                         dispatch(displayMessage({texte: "Tableau ajouté avec succès !", typeMessage: "success"}))
                         dispatch(closeFormAddTable())
                     }else{

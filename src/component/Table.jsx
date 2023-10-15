@@ -42,7 +42,7 @@ export default function Table({data, tasksTable}) {
           }}
         >{data.title}</p>
         {tasksTable.map((task, index)=>{
-            return <Task key={index} task={task}/>
+            return <div key={index} style={{position:'relative'}}><Task key={index} task={task}/></div>
         })}
     </div>
   )
