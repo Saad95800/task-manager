@@ -10,7 +10,7 @@ export default function Table({data, tasksTable}) {
 
   return (
     <div className="table p-2 m-3 rounded"
-    style={{minWidth: '250px'}}
+    style={{minWidth: '250px',maxWidth: '250px', minHeight: '500px'}}
     draggable="true"
     onDragStart={(e)=>{
       e.stopPropagation()

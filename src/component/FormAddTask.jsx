@@ -9,11 +9,8 @@ export default function FormAddTask({tables}) {
     const [task, setTask] = useState('')
 
   return (
-    <div className="popup-overlay">
-        <div className="m-3 border p-3 rounded-3" style={{backgroundColor: '#ffffffd6'}}>
-            <button className="btn btn-danger" onClick={()=>{
-                dispatch(closeFormAddTask())
-            }}>Fermer</button>
+    <div className="popup-overlay" onClick={()=>{dispatch(closeFormAddTask())}}>
+        <div className="m-3 border p-3 rounded-3" style={{backgroundColor: '#ffffffd6'}} onClick={(e)=>{e.stopPropagation()}}>
             <form onSubmit={(e)=>{
                 e.preventDefault()
                 if(idTable !== 0){
@@ -32,7 +29,7 @@ export default function FormAddTask({tables}) {
                         <select className="form-control" value={idTable} onChange={(e)=>{
                             setIdTable(e.target.value)
                         }}>
-                            <option value={0}>---</option>
+                            <option value={0}>Choisir un tableau</option>
                             {tables.map((table, index)=>{
                                 return <option key={index} value={table.id}>{table.title}</option>
                             })}

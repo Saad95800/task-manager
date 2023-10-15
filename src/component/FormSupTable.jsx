@@ -35,7 +35,7 @@ export default function FormSupTable({tables}) {
                     <select value={idTable} className="form-control" onChange={(e)=>{
                         setIdTable(e.target.value)
                     }}>
-                        <option value={0}>---</option>
+                        <option value={0}>Choisir un tableau</option>
                         {tables.map((table, index)=>{
                             return <option key={index} value={table.id}>{table.title}</option>
                         })}

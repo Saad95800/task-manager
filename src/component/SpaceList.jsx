@@ -11,9 +11,9 @@ export default function SpaceList() {
   const spaces = useSelector((state)=> state.space.spaces)
 
   return (
-    <div className="container">
+    <div className="container mt-5">
         <Box>
-            <Grid container spacing={2}>
+            <Grid container spacing={7}>
                 {spaces.map((space, i)=>{
                     return <Grid key={i} xs={6} md={3}>
                                 <SpaceItem space={space} />

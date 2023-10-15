@@ -9,8 +9,8 @@ export default function Login() {
     const [password, setPassword] = useState('');
 
   return (
-    <div className="container">
-        <h1>Connexion</h1>
+    <div className="container mt-3">
+        <h1 className="text-center">Connexion</h1>
         <form onSubmit={(e)=>{
             e.preventDefault()
             if(email === 'contact@cloudcampus.fr' && password === '0000'){

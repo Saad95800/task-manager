@@ -5,12 +5,13 @@ import FormSupTable from './FormSupTable'
 import FormAddTask from './FormAddTask'
 import FormEditTask from './FormEditTask'
 import FormEditTable from './FormEditTable'
-import {Link, useParams} from 'react-router-dom'
-import {produce} from 'immer'
-import {store} from '../redux/store'
+import {useParams} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setTables, setFormAddTableVisible, setFormDropTableVisible } from '../redux/table/TableSlice'
 import { setFormAddTaskVisible } from '../redux/task/TaskSlice'
+import AddIcon from '@mui/icons-material/Add';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 export default function Container() {
 
@@ -35,17 +36,17 @@ export default function Container() {
     let tableFiltered = tableSorted.filter(t => t.spaceId.toString() === spaceId.toString())
   return (
     <div className="container">
-        <Link to={"/"} className="btn fs-5 border mt-4 mb-4">{'< Page d\'accueil'}</Link>  
-        <div>
-            <button className="btn btn-success" onClick={()=>{
+        <h1 className="text-center my-4 text-color-website">Tableaux de tâches</h1>
+        <div className="d-flex justify-content-center">
+            <button className="btn m-2 text-white fs-5 fw-bold" style={{backgroundColor: '#8d91ff3b'}} onClick={()=>{
                 dispatch(setFormAddTableVisible(true)) 
-            }}>Ajouter un tableau</button>
-            <button className="btn btn-danger" onClick={()=>{
+            }}><AddIcon className="me-2" />Ajouter un tableau</button>
+            <button className="btn m-2 text-white fs-5 fw-bold" style={{backgroundColor: '#88161642'}} onClick={()=>{
                 dispatch(setFormDropTableVisible(true))
-            }}>Supprimer un tableau</button>
-            <button className="btn btn-success" onClick={()=>{
+            }}><DeleteOutlineIcon className="me-2" />Supprimer un tableau</button>
+            <button className="btn m-2 text-white fs-5 fw-bold" style={{backgroundColor: '#70ff7047'}} onClick={()=>{
                 dispatch(setFormAddTaskVisible(true))
-            }}>Ajouter une tâche</button>
+            }}><AddCircleIcon className="me-2" />Ajouter une tâche</button>
         </div>
         <div className="d-flex">
             {formAddTableVisible && <FormAddTable />}
@@ -54,7 +55,7 @@ export default function Container() {
             {formEditTaskVisible && <FormEditTask task={taskToEdit} />}
             {formEditTableVisible && <FormEditTable table={tableToEdit} />}
         </div>
-        <div className="d-flex align-items-start" style={{overflowX: 'scroll', minHeight: '500px'}}>
+        <div className="d-flex align-items-start custom-scrollbar" style={{minHeight: '500px'}}>
             {tableFiltered.map((table, index)=>{
                 let tasksTable = [...tasks].filter((t) => t.idTable.toString() === table.id.toString())
                 return <Table 
