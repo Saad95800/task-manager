@@ -20,8 +20,17 @@ function App() {
   const navigate = useNavigate()
 
   const logout = () => {
+    sessionStorage.setItem('connected', '0');
     return navigate('/login')
   }
+
+  const checkConnexion = () => {
+    if(sessionStorage.getItem('connected') === '1' ){
+      return true
+    }
+    return navigate('/login')
+  }
+
   return (
     <div className="gradient-background container-app">
         <AppBar position="static" sx={{backgroundColor: '#af4ac1c7'}}>
@@ -37,10 +46,10 @@ function App() {
         </AppBar>
         {viewMessage && <Message texte={texte} typeMessage={typeMessage} />}
         <Routes>
-          <Route path={'/'} element={<HomePage />} />
-          <Route path={'/tasklist/:spaceId'} element={<Container />} />
+          <Route path={'/'} element={ checkConnexion() && <HomePage />} />
+          <Route path={'/tasklist/:spaceId'} element={ checkConnexion() && <Container />} />
+          <Route path={'/spaces'} element={ checkConnexion() && <SpaceList />} />
           <Route path={'/login'} element={<Login />} />
-          <Route path={'/spaces'} element={<SpaceList />} />
         </Routes>
     </div>
   )
