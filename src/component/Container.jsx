@@ -8,7 +8,7 @@ import FormEditTable from './FormEditTable'
 import {useParams} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setTables, setFormAddTableVisible, setFormDropTableVisible } from '../redux/table/TableSlice'
-import { setFormAddTaskVisible } from '../redux/task/TaskSlice'
+import { setFormAddTaskVisible, setTasks } from '../redux/task/TaskSlice'
 import AddIcon from '@mui/icons-material/Add';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -29,7 +29,25 @@ export default function Container() {
     const { spaceId } = useParams()
 
     useEffect(()=>{
-        dispatch(setTables(tables))
+        let tablesStorage = localStorage.getItem('tables')
+
+        if(tablesStorage !== null && tablesStorage !== 'undefined' && tablesStorage !== ''){
+          let data = JSON.parse(tablesStorage)
+          dispatch(setTables(data))
+        }else{
+          localStorage.setItem('tables', JSON.stringify(tables))
+        }
+
+        ////////////////////////
+
+        let tasksStorage = localStorage.getItem('tasks')
+
+        if(tasksStorage !== null && tasksStorage !== 'undefined' && tasksStorage !== ''){
+          let data = JSON.parse(tasksStorage)
+          dispatch(setTasks(data))
+        }else{
+          localStorage.setItem('tasks', JSON.stringify(tasks))
+        }
     }, [])
 
     let tableSorted = [...tables].sort((a, b)=> a.order > b.order ? 1 : -1  )
@@ -57,7 +75,12 @@ export default function Container() {
         </div>
         <div className="d-flex align-items-start custom-scrollbar" style={{minHeight: '500px'}}>
             {tableFiltered.map((table, index)=>{
-                let tasksTable = [...tasks].filter((t) => t.idTable.toString() === table.id.toString())
+                console.log(tasks)
+                let tasksTable = [...tasks].filter((t) => {
+                    console.log(t)
+                    console.log(table)
+                    return t.idTable.toString() === table.id.toString()
+                })
                 return <Table 
                             key={index} 
                             data={table} 

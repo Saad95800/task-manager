@@ -21,7 +21,7 @@ export default function HomePage() {
     value: tables.length
   },
   {
-    title: "Nombre d'espaces",
+    title: "Nombre de tâches",
     value: tasks.length
   }
 ]

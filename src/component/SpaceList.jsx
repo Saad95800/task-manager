@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Unstable_Grid2';
 import SpaceItem from './SpaceItem';
@@ -9,6 +9,20 @@ import { store } from '../redux/store';
 export default function SpaceList() {
 
   const spaces = useSelector((state)=> state.space.spaces)
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+
+    let spacesStorage = localStorage.getItem('spaces')
+
+    if(spacesStorage !== null && spacesStorage !== 'undefined' && spacesStorage !== ''){
+      let data = JSON.parse(spacesStorage)
+      dispatch(setSpaces(data))
+    }else{
+      localStorage.setItem('spaces', JSON.stringify(spaces))
+    }
+
+  }, [])
 
   return (
     <div className="container mt-5">

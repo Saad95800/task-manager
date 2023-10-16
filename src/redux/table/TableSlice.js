@@ -39,10 +39,13 @@ export const TableSlice = createSlice({
     initialState: initalState,
     reducers: {
         addTable: (state, action) => {
-            state.tables = [...state.tables, {id: uuidv4(), title: action.payload.title, order: state.tables.length + 1, spaceId: action.payload.spaceId}]
+            let newTables = [...state.tables, {id: uuidv4(), title: action.payload.title, order: state.tables.length + 1, spaceId: action.payload.spaceId}]
+            localStorage.setItem('tables', JSON.stringify(newTables))
+            state.tables = newTables
         },
         deleteTable: (state, action) => {
             let newTables = state.tables.filter((tab) => tab.id.toString() !== action.payload.idTable.toString())
+            localStorage.setItem('tables', JSON.stringify(newTables))
             state.tables = newTables
 
             // let newTasks = [...tasks].filter((t) => t.idTable !== action.payload.id.toString())
@@ -71,6 +74,7 @@ export const TableSlice = createSlice({
             let newTables = [...state.tables]
             let index = newTables.findIndex(t => t.id === action.payload.id_table)
             newTables[index].title = action.payload.title_table
+            localStorage.setItem('tables', JSON.stringify(newTables))
             state.tables = newTables
             state.formEditTableVisible = false
             //displayMessage("Tableau modifié avec succès !", "success")
@@ -107,7 +111,7 @@ export const TableSlice = createSlice({
                 }
     
             }
-            
+            localStorage.setItem('tables', JSON.stringify(newTables))
             state.tables = newTables
     
         },
