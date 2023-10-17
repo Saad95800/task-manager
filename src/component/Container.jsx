@@ -29,24 +29,27 @@ export default function Container() {
     const { spaceId } = useParams()
 
     useEffect(()=>{
-        let tablesStorage = localStorage.getItem('tables')
 
-        if(tablesStorage !== null && tablesStorage !== 'undefined' && tablesStorage !== ''){
-          let data = JSON.parse(tablesStorage)
-          dispatch(setTables(data))
-        }else{
-          localStorage.setItem('tables', JSON.stringify(tables))
-        }
+        const request = indexedDB.open('task-managerDB', 2)
 
-        ////////////////////////
+        request.onsuccess = function(event){
+          let db = event.target.result
+          const transaction = db.transaction(["table"], "readonly")
+          const tableStore = transaction.objectStore("table")
+          const request = tableStore.getAll()
+    
+          request.onsuccess = function(){
+            dispatch(setTables(request.result))
+          }
+    
+          const transaction2 = db.transaction(["task"], "readonly")
+          const taskStore = transaction2.objectStore("task")
+          const request2 = taskStore.getAll()
+    
+          request2.onsuccess = function(){
+            dispatch(setTasks(request2.result))
+          }
 
-        let tasksStorage = localStorage.getItem('tasks')
-
-        if(tasksStorage !== null && tasksStorage !== 'undefined' && tasksStorage !== ''){
-          let data = JSON.parse(tasksStorage)
-          dispatch(setTasks(data))
-        }else{
-          localStorage.setItem('tasks', JSON.stringify(tasks))
         }
     }, [])
 
@@ -77,8 +80,6 @@ export default function Container() {
             {tableFiltered.map((table, index)=>{
                 console.log(tasks)
                 let tasksTable = [...tasks].filter((t) => {
-                    console.log(t)
-                    console.log(table)
                     return t.idTable.toString() === table.id.toString()
                 })
                 return <Table 

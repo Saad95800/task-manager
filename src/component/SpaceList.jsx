@@ -13,13 +13,18 @@ export default function SpaceList() {
 
   useEffect(()=>{
 
-    let spacesStorage = localStorage.getItem('spaces')
+    const request = indexedDB.open('task-managerDB', 2)
 
-    if(spacesStorage !== null && spacesStorage !== 'undefined' && spacesStorage !== ''){
-      let data = JSON.parse(spacesStorage)
-      dispatch(setSpaces(data))
-    }else{
-      localStorage.setItem('spaces', JSON.stringify(spaces))
+    request.onsuccess = function(event){
+      let db = event.target.result
+      const transaction = db.transaction(["space"], "readonly")
+      const spaceStore = transaction.objectStore("space")
+      const request = spaceStore.getAll()
+
+      request.onsuccess = function(){
+        dispatch(setSpaces(request.result))
+      }
+
     }
 
   }, [])

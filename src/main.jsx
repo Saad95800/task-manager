@@ -6,7 +6,7 @@ import {BrowserRouter} from 'react-router-dom'
 import {store} from './redux/store'
 import {Provider} from 'react-redux'
 
-const request = indexedDB.open('task-managerDB', 1)
+const request = indexedDB.open('task-managerDB', 2)
 
 request.onupgradeneeded = function(event){
   let db = event.target.result
@@ -17,7 +17,7 @@ request.onupgradeneeded = function(event){
   let spaces = [
         {
             id: 1,
-            title: 'Espace cloud campus'
+            title: 'Espace cloud campus 2222'
         },
         {
             id: 2,
