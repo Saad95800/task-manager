@@ -17,27 +17,33 @@ request.onupgradeneeded = function(event){
   let spaces = [
         {
             id: 1,
-            title: 'Espace cloud campus 2222'
+            title: 'Espace cloud campus 2222',
+            color: "#fff"
         },
         {
             id: 2,
-            title: 'Espace job freelance'
+            title: 'Espace job freelance',
+            color: "#fff"
         },
         {
             id: 3,
-            title: 'Projets perso'
+            title: 'Projets perso',
+            color: "#fff"
         },
         {
             id: 4,
-            title: 'Projets pro'
+            title: 'Projets pro',
+            color: "#fff"
         },
         {
             id: 5,
-            title: 'Tâches quotidiennes'
+            title: 'Tâches quotidiennes',
+            color: "#fff"
         },
         {
             id: 6,
-            title: 'Tâches administratives'
+            title: 'Tâches administratives',
+            color: "#fff"
         }
     ]
 

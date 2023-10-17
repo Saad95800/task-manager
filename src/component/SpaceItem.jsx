@@ -6,12 +6,13 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
+import { useSelector } from 'react-redux';
 
 export default function SpaceItem({space}) {
-    
+  
   return (
     <Box sx={{ minWidth: 275 }}>
-        <Card variant="outlined" sx={{minHeight: "140px", backgroundColor: '#e7c4ff6e', cursor: 'pointer'}}>
+        <Card variant="outlined" sx={{minHeight: "140px", backgroundColor: space.color, cursor: 'pointer'}}>
         <div className="d-flex justify-content-end mt-2 me-2"><EditIcon /></div>
             <React.Fragment>
               <CardContent>

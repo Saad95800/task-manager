@@ -36,10 +36,8 @@ export const TaskSlice = createSlice({
             state.formAddTaskVisible = false
         },
         moveTask: (state, action) => {
-            let newTasks = [...state.tasks]
-            let index = newTasks.findIndex(t => t.id === action.payload.id_task)
-            newTasks[index].idTable = action.payload.id_table_drop
-            state.tasks = newTasks
+            let index = state.tasks.findIndex(t => t.id.toString() === action.payload.id_task.toString())
+            state.tasks[index].idTable = action.payload.id_table_drop
         },
         displayFormUpdateTask: (state, action) => {
             state.formEditTaskVisible = true
@@ -49,7 +47,7 @@ export const TaskSlice = createSlice({
             state.formEditTaskVisible = false
         },
         updateTask: (state, action) => {
-            let index = [...state.tasks].findIndex(t => t.id === action.payload.id_task)
+            let index = [...state.tasks].findIndex(t => t.id.toString() === action.payload.id_task.toString())
             let newTasks = [...state.tasks]
             newTasks[index].content = action.payload.content
             localStorage.setItem('tasks', JSON.stringify(newTasks))

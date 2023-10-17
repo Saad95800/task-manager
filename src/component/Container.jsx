@@ -78,7 +78,6 @@ export default function Container() {
         </div>
         <div className="d-flex align-items-start custom-scrollbar" style={{minHeight: '500px'}}>
             {tableFiltered.map((table, index)=>{
-                console.log(tasks)
                 let tasksTable = [...tasks].filter((t) => {
                     return t.idTable.toString() === table.id.toString()
                 })

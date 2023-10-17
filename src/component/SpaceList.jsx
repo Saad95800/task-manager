@@ -3,12 +3,15 @@ import {useDispatch, useSelector} from 'react-redux'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Unstable_Grid2';
 import SpaceItem from './SpaceItem';
-import { setSpaces } from '../redux/space/SpaceSlice';
+import { setSpaces, setViewFormEditSpace } from '../redux/space/SpaceSlice';
 import { store } from '../redux/store';
+import FormEditSpace from './FormEditSpace';
 
 export default function SpaceList() {
 
   const spaces = useSelector((state)=> state.space.spaces)
+  const viewFormEditSpace = useSelector((state) => state.space.viewFormEditSpace)
+  
   const dispatch = useDispatch()
 
   useEffect(()=>{
@@ -30,8 +33,13 @@ export default function SpaceList() {
   }, [])
 
   return (
-    <div className="container mt-5">
-        <Box>
+    <>
+      <div className="container mt-5">
+        <h1 className="text-center text-color-website mt-3">Liste des espaces</h1>
+        <button className="btn m-2 text-white fs-5 fw-bold" style={{backgroundColor: '#8d91ff3b'}} onClick={()=>{
+              store.dispatch(setViewFormEditSpace(true))
+        }}>Ajouter</button>
+        <Box className="mt-3">
             <Grid container spacing={7}>
                 {spaces.map((space, i)=>{
                     return <Grid key={i} xs={6} md={3}>
@@ -40,6 +48,9 @@ export default function SpaceList() {
                 })}                
             </Grid>
         </Box>
-    </div>
+      </div>   
+      {viewFormEditSpace && <FormEditSpace />}   
+    </>
+
   )
 }
