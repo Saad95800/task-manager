@@ -20,3 +20,26 @@ export const insertSpaceIDB = (newSpace) => {
         };
     }
 }
+
+export const updateSpaceIDB = (newSpace) => {
+
+    let request = indexedDB.open("task-managerDB", 2);
+
+    request.onsuccess = function(event) {
+        const db = event.target.result;
+
+        const transaction = db.transaction("space", "readwrite");
+
+        const spaceStore = transaction.objectStore("space");
+
+        const request = spaceStore.put(newSpace);
+
+        request.onsuccess = function(event) {
+            console.log("Space modifié avec succès");
+        };
+
+        request.onerror = function(event) {
+            console.log("Une erreur est survenue lors de la modification du space");
+        };
+    }
+}

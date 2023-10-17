@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setTitle, setColor,addSpace, setViewFormEditSpace } from '../redux/space/SpaceSlice'
+import { setTitle, setColor,addSpace, setViewFormEditSpace, updateSpace } from '../redux/space/SpaceSlice'
 import CloseIcon from '@mui/icons-material/Close'
 
 import Box from '@mui/material/Box';
@@ -14,8 +14,15 @@ export default function FormEditSpace() {
     const dispatch = useDispatch()
     const title = useSelector(state => state.space.title)
     const color = useSelector(state => state.space.color)
+    const context = useSelector(state => state.space.context)
+    const spaceToEdit = useSelector(state => state.space.spaceToEdit)
 
     useEffect(() => {
+
+        if(context === 'edit') {
+            dispatch(setTitle(spaceToEdit.title))
+        }
+
         return ()=>{
             // Ce code s'éxécute lorsque le composant disparait
             dispatch(setTitle(''))
@@ -34,13 +41,24 @@ export default function FormEditSpace() {
             return
         }
 
-        dispatch(addSpace({
-            title: title,
-            color: color
-        }))
+        let message = "Espace ajouté avec succès !"
+        if(context === 'edit'){
+            dispatch(updateSpace({
+                id: spaceToEdit.id,
+                title: title,
+                color: color
+            })) 
+            message = "Espace modifié avec succès !"
+        }else{
+            dispatch(addSpace({
+                title: title,
+                color: color
+            }))            
+        }
+
 
         dispatch(displayMessage({
-            texte: "Espace ajouté avec succès !",
+            texte: message,
             typeMessage: "success"
         }))
 
@@ -60,7 +78,7 @@ export default function FormEditSpace() {
                         dispatch(setViewFormEditSpace(false))
                     }} style={{position: 'absolute', top: '10px', right: '10px', width: '35px', height: '35px'}}/>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                    {'Ajouter un espace'}
+                    {context === 'edit' ? 'Editer un espace' : 'Ajouter un espace'}
                 </Typography>
                 
                 <div>
@@ -77,7 +95,7 @@ export default function FormEditSpace() {
                                 }} />
                             <div className="form-group">
                                 <button className="btn btn-success" type="submit">
-                                    {'Ajouter'}
+                                    {context === 'edit' ? 'Modifier' : 'Ajouter'}
                                 </button>
                             </div>
                         </form>

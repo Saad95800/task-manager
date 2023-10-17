@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid';
-import { insertSpaceIDB } from '../../utils/functions';
+import { insertSpaceIDB, updateSpaceIDB } from '../../utils/functions';
 
 const initalState = {
     spaces: [
@@ -37,7 +37,9 @@ const initalState = {
     ],
     viewFormEditSpace: false,
     title: '',
-    color: '#e7c4ff6e'
+    color: '#e7c4ff6e',
+    spaceToEdit: null,
+    context: 'add'
 }
 
 export const SpaceSlice = createSlice({
@@ -68,7 +70,36 @@ export const SpaceSlice = createSlice({
             insertSpaceIDB(newSpace)
 
             state.viewFormEditSpace = false
-        }
+        },
+        updateSpace: (state, action) => {
+
+            let newSpaces = [...state.spaces]
+
+            for(let space of newSpaces){
+                if(space.id.toString() === action.payload.id.toString()){
+                    space.title = action.payload.title
+                    space.color = action.payload.color
+                }
+            }
+
+            let index = state.spaces.findIndex(s => s.id.toString() === action.payload.id.toString())
+            state.spaces[index].title = action.payload.title
+            state.spaces[index].color = action.payload.color
+
+            updateSpaceIDB({
+                id: action.payload.id,
+                title: action.payload.title,
+                color: action.payload.color
+            })
+
+            state.viewFormEditSpace = false
+        },
+        setSpaceToEdit: (state, action) => {
+            state.spaceToEdit = action.payload
+        },
+        setContext: (state, action) => {
+            state.context = action.payload
+        },
     }
 })
 
@@ -77,7 +108,10 @@ export const {
     setViewFormEditSpace,
     setTitle,
     setColor,
-    addSpace
+    addSpace,
+    setSpaceToEdit,
+    setContext,
+    updateSpace
 } = SpaceSlice.actions
 
 export default SpaceSlice.reducer
