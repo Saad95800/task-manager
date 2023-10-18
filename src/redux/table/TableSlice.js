@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {v4 as uuidv4} from 'uuid'
+import { insertTableIDB, updateTableIDB, deleteTableIDB } from '../../utils/functions'
 
 const initalState = {
     tables:  [
@@ -39,13 +40,19 @@ export const TableSlice = createSlice({
     initialState: initalState,
     reducers: {
         addTable: (state, action) => {
-            let newTables = [...state.tables, {id: uuidv4(), title: action.payload.title, order: state.tables.length + 1, spaceId: action.payload.spaceId}]
-            localStorage.setItem('tables', JSON.stringify(newTables))
+
+            let newTable = {id: uuidv4(), title: action.payload.title, order: state.tables.length + 1, spaceId: action.payload.spaceId}
+            let newTables = [...state.tables, newTable]
+           
+            insertTableIDB(newTable)
+
             state.tables = newTables
         },
         deleteTable: (state, action) => {
             let newTables = state.tables.filter((tab) => tab.id.toString() !== action.payload.idTable.toString())
-            localStorage.setItem('tables', JSON.stringify(newTables))
+            
+            deleteTableIDB(action.payload.idTable.toString())
+
             state.tables = newTables
 
             // let newTasks = [...tasks].filter((t) => t.idTable !== action.payload.id.toString())
@@ -74,10 +81,17 @@ export const TableSlice = createSlice({
             let newTables = [...state.tables]
             let index = newTables.findIndex(t => t.id === action.payload.id_table)
             newTables[index].title = action.payload.title_table
-            localStorage.setItem('tables', JSON.stringify(newTables))
+            
+            console.log(action.payload)
+            updateTableIDB({
+                id: action.payload.id_table,
+                title: action.payload.title_table,
+                order: action.payload.order,
+                spaceId: action.payload.spaceId
+            })
+
             state.tables = newTables
             state.formEditTableVisible = false
-            //displayMessage("Tableau modifié avec succès !", "success")
         },
         moveTable: (state, action) => {
 

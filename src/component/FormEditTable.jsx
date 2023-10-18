@@ -18,7 +18,8 @@ export default function FormEditTable({table}) {
                 // displayMessage("Veuillez saisir un Texte pour le tableau", "error")
                 return
             }
-            dispatch(updateTable({id_table: table.id, title_table: titleTable}))
+            console.log(table)
+            dispatch(updateTable({id_table: table.id, title_table: titleTable, order: table.order, spaceId: table.spaceId}))
         }}
         onClick={(e)=>{
             e.stopPropagation()
