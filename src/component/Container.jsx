@@ -54,10 +54,7 @@ export default function Container() {
     }, [])
 
     let tableSorted = [...tables].sort((a, b)=> a.order > b.order ? 1 : -1  )
-    let tableFiltered = tableSorted.filter(t => {
-        console.log(t)
-        return t.spaceId.toString() === spaceId.toString()
-    })
+    let tableFiltered = tableSorted.filter(t => t.spaceId.toString() === spaceId.toString())
   return (
     <div className="container">
         <h1 className="text-center my-4 text-color-website">Tableaux de tâches</h1>

@@ -3,38 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { insertSpaceIDB, updateSpaceIDB } from '../../utils/functions';
 
 const initalState = {
-    spaces: [
-        {
-            id: 1,
-            title: 'Espace cloud campus',
-            color: '#fff'
-        },
-        {
-            id: 2,
-            title: 'Espace job freelance',
-            color: '#fff'
-        },
-        {
-            id: 3,
-            title: 'Projets perso',
-            color: '#fff'
-        },
-        {
-            id: 4,
-            title: 'Projets pro',
-            color: '#fff'
-        },
-        {
-            id: 5,
-            title: 'Tâches quotidiennes',
-            color: '#fff'
-        },
-        {
-            id: 6,
-            title: 'Tâches administratives',
-            color: '#fff'
-        }
-    ],
+    spaces: [],
     viewFormEditSpace: false,
     title: '',
     color: '#e7c4ff6e',

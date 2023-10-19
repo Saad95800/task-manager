@@ -6,29 +6,28 @@ import SpaceItem from './SpaceItem';
 import { setSpaces, setViewFormEditSpace } from '../redux/space/SpaceSlice';
 import { store } from '../redux/store';
 import FormEditSpace from './FormEditSpace';
+import axios from 'axios';
 
 export default function SpaceList() {
 
   const spaces = useSelector((state)=> state.space.spaces)
   const viewFormEditSpace = useSelector((state) => state.space.viewFormEditSpace)
+  const apiKey = useSelector((state) => state.app.apiKey)
+  const projectId = useSelector((state) => state.app.projectId)
   
   const dispatch = useDispatch()
 
   useEffect(()=>{
 
-    const request = indexedDB.open('task-managerDB', 2)
-
-    request.onsuccess = function(event){
-      let db = event.target.result
-      const transaction = db.transaction(["space"], "readonly")
-      const spaceStore = transaction.objectStore("space")
-      const request = spaceStore.getAll()
-
-      request.onsuccess = function(){
-        dispatch(setSpaces(request.result))
-      }
-
-    }
+    axios({
+      method: "get",
+      url: `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/space?key=${apiKey}`,
+      responseType: 'json'
+    })
+    .then((response)=>{
+      console.log(response.data.documents)
+      dispatch(setSpaces(response.data.documents))
+    })
 
   }, [])
 

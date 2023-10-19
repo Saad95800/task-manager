@@ -69,7 +69,9 @@ export const TableSlice = createSlice({
         displayFormTable: (state, action) => {
             state.tableToEdit = {
                 id: action.payload.id_table,
-                title: action.payload.title_table  
+                title: action.payload.title_table, 
+                order: action.payload.order,  
+                spaceId: action.payload.spaceId  
             }
             state.formEditTableVisible = true
         },
@@ -82,7 +84,6 @@ export const TableSlice = createSlice({
             let index = newTables.findIndex(t => t.id === action.payload.id_table)
             newTables[index].title = action.payload.title_table
             
-            console.log(action.payload)
             updateTableIDB({
                 id: action.payload.id_table,
                 title: action.payload.title_table,

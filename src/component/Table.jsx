@@ -38,7 +38,7 @@ export default function Table({data, tasksTable}) {
     >
         <p
           onClick={()=>{
-            dispatch(displayFormTable({id_table: data.id, title_table: data.title}))
+            dispatch(displayFormTable({id_table: data.id, title_table: data.title, order: data.order, spaceId: data.spaceId}))
           }}
         >{data.title}</p>
         {tasksTable.map((task, index)=>{
