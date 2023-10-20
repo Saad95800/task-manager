@@ -28,9 +28,30 @@ export function getTables() {
 
 export function createTable(newTable) {
     try { 
-		return axios.patch(
+		return axios.post(
             `${apiUrl}${projectId}/databases/(default)/documents/table?key=${apiKey}`,
             newTable
+            ).then(function (response){return response.data});
+    } catch (error) {
+        return null;
+    }
+}
+
+export function updateTableAPI(newTable) {
+    try { 
+		return axios.patch(
+            `${apiUrl}${projectId}/databases/(default)/documents/table/${newTable.fields.id.stringValue}?key=${apiKey}`,
+            newTable
+            ).then(function (response){return response.data});
+    } catch (error) {
+        return null;
+    }
+}
+
+export function deleteTableAPI(id) {
+    try { 
+		return axios.delete(
+            `${apiUrl}${projectId}/databases/(default)/documents/table/${id}?key=${apiKey}`
             ).then(function (response){return response.data});
     } catch (error) {
         return null;

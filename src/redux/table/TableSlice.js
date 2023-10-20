@@ -1,6 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {v4 as uuidv4} from 'uuid'
-import { updateTableIDB, deleteTableIDB } from '../../utils/functions'
 
 const initalState = {
     tables:  [],
@@ -22,8 +20,6 @@ export const TableSlice = createSlice({
         },
         deleteTable: (state, action) => {
             let newTables = state.tables.filter((tab) => tab.id.toString() !== action.payload.idTable.toString())
-            
-            deleteTableIDB(action.payload.idTable.toString())
 
             state.tables = newTables
 

@@ -8,12 +8,22 @@ import Box from '@mui/material/Box';
 import { styleModal } from '../utils/styles'
 import { closeFormAddTask } from '../redux/task/TaskSlice';
 import { displayMessage } from '../redux/message/MessageSlice';
+import { deleteTableAPI } from '../api/TableApi';
 
 export default function FormSupTable({tables}) {
 
     const dispatch = useDispatch()
     const [idTable, setIdTable] = useState(0)
 
+    const handleSubmit = async (e)=>{
+        e.preventDefault()
+        if(idTable !== 0){
+            deleteTableAPI(idTable)
+            dispatch(deleteTable({idTable}))
+            setIdTable(0)            
+        }
+        dispatch(displayMessage({texte: "Tableau supprimé avec succès", typeMessage: "success"}))
+    }
   return (
     <Modal
         open={true}
@@ -22,14 +32,7 @@ export default function FormSupTable({tables}) {
         aria-describedby="modal-modal-description"
     >
         <Box className="m-3 border p-3 rounded-3 bg-forms" style={{...styleModal, backgroundColor: '#ffffffd6'}}>
-            <form onSubmit={(e)=>{
-                e.preventDefault()
-                if(idTable !== 0){
-                    dispatch(deleteTable({idTable}))
-                    setIdTable(0)            
-                }
-                dispatch(displayMessage({texte: "Tableau supprimé avec succès", typeMessage: "success"}))
-            }}>
+            <form onSubmit={handleSubmit}>
                 <Typography>Supprimer un tableau</Typography>
                 <div className="form-group">
                     <select value={idTable} className="form-control" onChange={(e)=>{
