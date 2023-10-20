@@ -22,7 +22,7 @@ export default function SpaceList() {
 
     const fetchSpaces = async () => {
       let spaces = await getSpaces()
-      dispatch(setSpaces(spaces.documents))
+      dispatch(setSpaces(spaces))
     }
     fetchSpaces()
 

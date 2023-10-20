@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {v4 as uuidv4} from 'uuid'
-import { insertTableIDB, updateTableIDB, deleteTableIDB } from '../../utils/functions'
+import { updateTableIDB, deleteTableIDB } from '../../utils/functions'
 
 const initalState = {
     tables:  [],
@@ -16,11 +16,8 @@ export const TableSlice = createSlice({
     reducers: {
         addTable: (state, action) => {
 
-            let newTable = {id: uuidv4(), title: action.payload.title, order: state.tables.length + 1, spaceId: action.payload.spaceId}
+            let newTable = {id: action.payload.id, title: action.payload.title, order: state.tables.length + 1, spaceId: action.payload.spaceId}
             let newTables = [...state.tables, newTable]
-           
-            
-
             state.tables = newTables
         },
         deleteTable: (state, action) => {

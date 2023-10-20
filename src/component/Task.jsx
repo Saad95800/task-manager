@@ -10,17 +10,17 @@ export default function Task({task}) {
     <div className="mb-1 p-2 rounded bg-white d-flex justify-content-between" style={{cursor: 'pointer'}}
     onDragStart={(e)=>{
       e.stopPropagation()
-      e.dataTransfer.setData('id_task', task.fields.id.stringValue)
+      e.dataTransfer.setData('id_task', task.id)
     }}
     onClick={()=>{
-      dispatch(displayFormUpdateTask({id_task: task.fields.id.stringValue}))
+      dispatch(displayFormUpdateTask({id_task: task.id}))
     }}
     draggable="true"
     >
-      {task.fields.content.stringValue}
+      {task.content}
       <button  type="button" className="btn-close" aria-label="close" onClick={(e)=>{
         e.stopPropagation()
-        dispatch(deleteTask({id_task: task.fields.id.stringValue}))
+        dispatch(deleteTask({id_task: task.id}))
       }}>
 
       </button>

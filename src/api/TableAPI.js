@@ -7,7 +7,20 @@ const projectId = import.meta.env.VITE_PROJECT_ID
 
 export function getTables() {
     try { 
-		return axios.get(`${apiUrl}${projectId}/databases/(default)/documents/table?key=${apiKey}`).then(function (response){return response.data});
+		return axios.get(`${apiUrl}${projectId}/databases/(default)/documents/table?key=${apiKey}`).then(function (response){
+            let tablesFirebase = response.data.documents
+            let tables = []
+            for(let tb of tablesFirebase){
+                let table = {
+                    id: tb.fields.id.stringValue,
+                    title: tb.fields.title.stringValue,
+                    order: tb.fields.order.stringValue,
+                    spaceId: tb.fields.spaceId.stringValue,
+                }
+                tables.push(table)
+            }
+            return tables
+        });
     } catch (error) {
         return null;
     }

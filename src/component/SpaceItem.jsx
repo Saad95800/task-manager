@@ -12,10 +12,10 @@ import { setContext, setSpaceToEdit, setViewFormEditSpace  } from '../redux/spac
 export default function SpaceItem({space}) {
 
   const dispatch = useDispatch()
-console.log(space)
+
   return (
     <Box sx={{ minWidth: 275 }}>
-        <Card variant="outlined" sx={{minHeight: "140px", backgroundColor: space.fields.color.stringValue, cursor: 'pointer'}}>
+        <Card variant="outlined" sx={{minHeight: "140px", backgroundColor: space.color, cursor: 'pointer'}}>
         <div className="d-flex justify-content-end mt-2 me-2"><EditIcon onClick={()=>{
           dispatch(setContext('edit'))
           dispatch(setViewFormEditSpace(true))
@@ -24,12 +24,12 @@ console.log(space)
             <React.Fragment>
               <CardContent>
                   <Typography variant="h5" component="div" className="text-white-border">
-                  {space.fields.title.stringValue}
+                  {space.title}
                   </Typography>
               </CardContent>
               <CardActions>
                   <div className="d-flex justify-content-center w-100">
-                    <Link to={"/tasklist/"+space.fields.id.stringValue} style={{textDecoration: 'auto'}} size="small">Accéder aux tableaux</Link>
+                    <Link to={"/tasklist/"+space.id} style={{textDecoration: 'auto'}} size="small">Accéder aux tableaux</Link>
                   </div>
               </CardActions>
             </React.Fragment>

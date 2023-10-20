@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import { styleModal } from '../utils/styles'
 import { useParams } from 'react-router-dom'
 import { createTable } from '../api/TableApi'
+import {v4 as uuidv4} from 'uuid'
 
 export default function FormAddTable() {
 
@@ -21,9 +22,12 @@ export default function FormAddTable() {
     const handleSubmit = async (e)=>{
         e.preventDefault()
         if(title.length > 0){
-
+            let id = uuidv4()
             let formData = {
                 "fields": {
+                  "id": {
+                    "stringValue": id
+                  },
                   "title": {
                     "stringValue": title
                   },
@@ -36,11 +40,11 @@ export default function FormAddTable() {
                 }
               }
             await createTable(formData)
-            dispatch(addTable({title: title, spaceId: spaceId}))
+            dispatch(addTable({id: id, title: title, spaceId: spaceId}))
             dispatch(displayMessage({texte: "Tableau ajouté avec succès !", typeMessage: "success"}))
             dispatch(closeFormAddTable())
         }else{
-            // displayMessage("Veuillez saisir un titre au tableau !", "error")
+            dispatch(displayMessage({texte: "Veuillez saisir un titre au tableau !", typeMessage: "error"}))
         }
     }
 

@@ -14,13 +14,13 @@ export default function Table({data, tasksTable}) {
     draggable="true"
     onDragStart={(e)=>{
       e.stopPropagation()
-      e.dataTransfer.setData('id_table_drag', data.fields.id.stringValue)
-      e.dataTransfer.setData('order_table_drag', data.fields.order.stringValue)
+      e.dataTransfer.setData('id_table_drag', data.id)
+      e.dataTransfer.setData('order_table_drag', data.order)
     }}
     onDrop={(e)=>{
       e.preventDefault()
       e.stopPropagation()
-      let id_table_drop = data.fields.id.stringValue
+      let id_table_drop = data.id
       if(e.dataTransfer.getData('id_task') !== undefined && e.dataTransfer.getData('id_task') !== null && e.dataTransfer.getData('id_task') !== ''){
         let id_task = e.dataTransfer.getData('id_task')
         dispatch(moveTask({id_task, id_table_drop}))
@@ -29,7 +29,7 @@ export default function Table({data, tasksTable}) {
       if(e.dataTransfer.getData('id_table_drag') !== undefined && e.dataTransfer.getData('id_table_drag') !== null && e.dataTransfer.getData('id_table_drag') !== ''){
        let id_table_drag = e.dataTransfer.getData('id_table_drag')
         let order_table_drag = e.dataTransfer.getData('order_table_drag')
-        dispatch(moveTable({id_table_drag: id_table_drag, order_table_drag: order_table_drag, id_table_drop: id_table_drop, order_table_drop: data.fields.order.stringValue}))
+        dispatch(moveTable({id_table_drag: id_table_drag, order_table_drag: order_table_drag, id_table_drop: id_table_drop, order_table_drop: data.order}))
       }
     }}
     onDragOver={(e)=>{
@@ -38,9 +38,9 @@ export default function Table({data, tasksTable}) {
     >
         <p
           onClick={()=>{
-            dispatch(displayFormTable({id_table: data.fields.id.stringValue, title_table: data.fields.title.stringValue, order: data.fields.order.stringValue, spaceId: data.fields.spaceId.stringValue}))
+            dispatch(displayFormTable({id_table: data.id, title_table: data.title, order: data.order, spaceId: data.spaceId}))
           }}
-        >{data.fields.title.stringValue}</p>
+        >{data.title}</p>
         {tasksTable.map((task, index)=>{
             return <div key={index} style={{position:'relative'}}><Task key={index} task={task}/></div>
         })}

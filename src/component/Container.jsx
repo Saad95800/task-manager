@@ -40,20 +40,20 @@ export default function Container() {
 
         const fetchTables = async () => {
             let tables = await getTables()
-            dispatch(setTables(tables.documents))
+            dispatch(setTables(tables))
         }
         const fetchTasks = async () => {
             let tasks = await getTasks()
-            dispatch(setTasks(tasks.documents))
+            dispatch(setTasks(tasks))
         }
-        
+
         fetchTables()
         fetchTasks()
 
     }, [])
 
-    let tableSorted = [...tables].sort((a, b)=> Number(a.order) > Number(b.fields.order.stringValue) ? 1 : -1  )
-    let tableFiltered = tableSorted.filter(t => t.fields.spaceId.stringValue.toString() === spaceId.toString())
+    let tableSorted = [...tables].sort((a, b)=> Number(a.order) > Number(b.order) ? 1 : -1  )
+    let tableFiltered = tableSorted.filter(t => t.spaceId.toString() === spaceId.toString())
   return (
     <div className="container">
         <h1 className="text-center my-4 text-color-website">Tableaux de tâches</h1>
@@ -78,7 +78,7 @@ export default function Container() {
         <div className="d-flex align-items-start custom-scrollbar" style={{minHeight: '500px'}}>
             {tableFiltered.map((table, index)=>{
                 let tasksTable = [...tasks].filter((t) => {
-                    return t.fields.idTable.stringValue.toString() === table.fields.id.stringValue.toString()
+                    return t.idTable.toString() === table.id.toString()
                 })
                 return <Table 
                             key={index} 

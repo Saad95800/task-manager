@@ -44,29 +44,6 @@ export const updateSpaceIDB = (newSpace) => {
     }
 }
 
-export const insertTableIDB = (newTable) => {
-
-    let request = indexedDB.open("task-managerDB", 2);
-
-    request.onsuccess = function(event) {
-        const db = event.target.result;
-
-        const transaction = db.transaction("table", "readwrite");
-
-        const tableStore = transaction.objectStore("table");
-
-        const request = tableStore.put(newTable);
-
-        request.onsuccess = function(event) {
-            console.log("Tableau ajouté avec succès");
-        };
-
-        request.onerror = function(event) {
-            console.log("Une erreur est survenue lors de l'ajout du tableau");
-        };
-    }
-}
-
 export const updateTableIDB = (newTable) => {
 
     let request = indexedDB.open("task-managerDB", 2);
