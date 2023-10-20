@@ -46,6 +46,7 @@ export default function Container() {
             let tasks = await getTasks()
             dispatch(setTasks(tasks.documents))
         }
+        
         fetchTables()
         fetchTasks()
 

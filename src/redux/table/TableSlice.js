@@ -19,7 +19,7 @@ export const TableSlice = createSlice({
             let newTable = {id: uuidv4(), title: action.payload.title, order: state.tables.length + 1, spaceId: action.payload.spaceId}
             let newTables = [...state.tables, newTable]
            
-            insertTableIDB(newTable)
+            
 
             state.tables = newTables
         },

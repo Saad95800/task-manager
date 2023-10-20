@@ -12,3 +12,14 @@ export function getTables() {
         return null;
     }
 }
+
+export function createTable(newTable) {
+    try { 
+		return axios.patch(
+            `${apiUrl}${projectId}/databases/(default)/documents/table?key=${apiKey}`,
+            newTable
+            ).then(function (response){return response.data});
+    } catch (error) {
+        return null;
+    }
+}
