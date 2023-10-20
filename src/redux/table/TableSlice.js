@@ -3,32 +3,7 @@ import {v4 as uuidv4} from 'uuid'
 import { insertTableIDB, updateTableIDB, deleteTableIDB } from '../../utils/functions'
 
 const initalState = {
-    tables:  [
-        {
-            id: '1',
-            title: 'Projet ressource',
-            order: 4,
-            spaceId: 1
-        },
-        {
-            id: '2',
-            title: 'Sujet de la prochaine réunion',
-            order: 3,
-            spaceId: 1
-        },
-        {
-            id: '3',
-            title: 'A faire',
-            order: 2,
-            spaceId: 1
-        },
-        {
-            id: '4',
-            title: 'En cours',
-            order: 1,
-            spaceId: 1
-        }
-    ],
+    tables:  [],
     formAddTableVisible: false,
     formDropTableVisible: false,
     formEditTableVisible: false,

@@ -3,13 +3,7 @@ import { getTaskById } from '../../services'
 import {v4 as uuidv4} from 'uuid'
 
 const initalState = {
-    tasks: [
-        {
-            id: 1,
-            content: 'Tâche de test',
-            idTable: 1
-        }
-    ],
+    tasks: [],
     formAddTaskVisible: false,
     formEditTaskVisible: false,
     taskToEdit: null

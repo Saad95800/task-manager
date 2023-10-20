@@ -12,10 +12,15 @@ import { setFormAddTaskVisible, setTasks } from '../redux/task/TaskSlice'
 import AddIcon from '@mui/icons-material/Add';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import axios from 'axios'
 
 export default function Container() {
 
     const dispatch = useDispatch()
+
+    const apiKey = useSelector((state) => state.app.apiKey)
+    const projectId = useSelector((state) => state.app.projectId)
+
     const tables = useSelector((state) => state.table.tables)
     const tasks = useSelector((state) => state.task.tasks)
     const formAddTableVisible = useSelector((state) => state.table.formAddTableVisible)
@@ -30,31 +35,41 @@ export default function Container() {
 
     useEffect(()=>{
 
-        const request = indexedDB.open('task-managerDB', 2)
+        axios({
+            method: 'get',
+            url: `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/table?key=${apiKey}`,
+            responseType: 'json'
+        })
+        .then(function(response){
 
-        request.onsuccess = function(event){
-          let db = event.target.result
-          const transaction = db.transaction(["table"], "readonly")
-          const tableStore = transaction.objectStore("table")
-          const request = tableStore.getAll()
-    
-          request.onsuccess = function(){
-            dispatch(setTables(request.result))
-          }
-    
-          const transaction2 = db.transaction(["task"], "readonly")
-          const taskStore = transaction2.objectStore("task")
-          const request2 = taskStore.getAll()
-    
-          request2.onsuccess = function(){
-            dispatch(setTasks(request2.result))
-          }
+            console.log(response.data.documents)
+            dispatch(setTables(response.data.documents))
 
-        }
+            axios({
+                method: 'get',
+                url: `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/task?key=${apiKey}`,
+                responseType: 'json'
+            })
+            .then(function(response){
+                console.log(response.data.documents)
+                dispatch(setTasks(response.data.documents))
+            }).catch(function(error){
+                console.log(error)
+            })
+
+        }).catch(function(error){
+            console.log(error)
+        })
+
+
+        
+
+
+
     }, [])
 
-    let tableSorted = [...tables].sort((a, b)=> a.order > b.order ? 1 : -1  )
-    let tableFiltered = tableSorted.filter(t => t.spaceId.toString() === spaceId.toString())
+    let tableSorted = [...tables].sort((a, b)=> Number(a.order) > Number(b.fields.order.stringValue) ? 1 : -1  )
+    let tableFiltered = tableSorted.filter(t => t.fields.spaceId.stringValue.toString() === spaceId.toString())
   return (
     <div className="container">
         <h1 className="text-center my-4 text-color-website">Tableaux de tâches</h1>
@@ -79,7 +94,7 @@ export default function Container() {
         <div className="d-flex align-items-start custom-scrollbar" style={{minHeight: '500px'}}>
             {tableFiltered.map((table, index)=>{
                 let tasksTable = [...tasks].filter((t) => {
-                    return t.idTable.toString() === table.id.toString()
+                    return t.fields.idTable.stringValue.toString() === table.fields.id.stringValue.toString()
                 })
                 return <Table 
                             key={index} 
