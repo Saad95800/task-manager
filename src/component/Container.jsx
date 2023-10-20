@@ -13,6 +13,8 @@ import AddIcon from '@mui/icons-material/Add';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import axios from 'axios'
+import { getTables } from '../api/TableApi'
+import { getTasks } from '../api/TaskAPI'
 
 export default function Container() {
 
@@ -35,36 +37,17 @@ export default function Container() {
 
     useEffect(()=>{
 
-        axios({
-            method: 'get',
-            url: `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/table?key=${apiKey}`,
-            responseType: 'json'
-        })
-        .then(function(response){
 
-            console.log(response.data.documents)
-            dispatch(setTables(response.data.documents))
-
-            axios({
-                method: 'get',
-                url: `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/task?key=${apiKey}`,
-                responseType: 'json'
-            })
-            .then(function(response){
-                console.log(response.data.documents)
-                dispatch(setTasks(response.data.documents))
-            }).catch(function(error){
-                console.log(error)
-            })
-
-        }).catch(function(error){
-            console.log(error)
-        })
-
-
-        
-
-
+        const fetchTables = async () => {
+            let tables = await getTables()
+            dispatch(setTables(tables.documents))
+        }
+        const fetchTasks = async () => {
+            let tasks = await getTasks()
+            dispatch(setTasks(tasks.documents))
+        }
+        fetchTables()
+        fetchTasks()
 
     }, [])
 

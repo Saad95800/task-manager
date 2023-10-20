@@ -7,6 +7,7 @@ import { setSpaces, setViewFormEditSpace } from '../redux/space/SpaceSlice';
 import { store } from '../redux/store';
 import FormEditSpace from './FormEditSpace';
 import axios from 'axios';
+import { getSpaces } from '../api/SpaceAPI';
 
 export default function SpaceList() {
 
@@ -19,15 +20,11 @@ export default function SpaceList() {
 
   useEffect(()=>{
 
-    axios({
-      method: "get",
-      url: `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/space?key=${apiKey}`,
-      responseType: 'json'
-    })
-    .then((response)=>{
-      console.log(response.data.documents)
-      dispatch(setSpaces(response.data.documents))
-    })
+    const fetchSpaces = async () => {
+      let spaces = await getSpaces()
+      dispatch(setSpaces(spaces.documents))
+    }
+    fetchSpaces()
 
   }, [])
 
